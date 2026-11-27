@@ -5,7 +5,7 @@ Name "Deck Remote"
 !include "x64.nsh"
 !cd "${__FILEDIR__}\.."
 
-OutFile "dist\DeckRemote-0.4.1-win-x64-setup.exe"
+OutFile "dist\DeckRemote-${DECK_REMOTE_VERSION}-win-x64-setup.exe"
 InstallDir "$PROGRAMFILES64\Deck Remote"
 RequestExecutionLevel admin
 SetCompressor /SOLID lzma
@@ -48,7 +48,7 @@ Section "Deck Remote"
     WriteUninstaller "$INSTDIR\uninstall.exe"
     CreateShortcut "$SMPROGRAMS\Deck Remote.lnk" "$INSTDIR\app\DeckRemote.exe"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayName" "Deck Remote"
-    WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "0.4.1"
+    WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayVersion" "${DECK_REMOTE_VERSION}"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\app\DeckRemote.exe"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "InstallLocation" "$INSTDIR"
     WriteRegStr HKLM "${UNINSTALL_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'

@@ -10,6 +10,8 @@
 
 ## 安装
 
+从 [GitHub Releases](https://github.com/zuozishi/deck-remote/releases/latest) 下载 Windows x64 和 SteamOS 安装包。
+
 1. 在 Windows x64 上运行 Windows 安装包，从开始菜单打开 **Deck Remote**。如果应用提示驱动不可用，从 [ViGEmBus 官方发布页](https://github.com/nefarius/ViGEmBus/releases/tag/v1.22.0) 安装驱动，并在应用内重新检测。安装程序需要管理员权限来写入程序目录和创建防火墙规则。日常启动使用普通用户权限。
 2. 在 Steam Deck 切换到桌面模式，解压 SteamOS 包。在解压目录的 Konsole 中运行 **bash install.sh**。应用菜单会出现 **Deck Remote**。
 3. 如需从游戏模式启动，在 Steam 桌面客户端将 **~/.local/opt/deck-remote/current/DeckRemote** 添加为非 Steam 游戏，关闭该条目的兼容性强制选项，并填写启动选项 **--game-mode**。返回游戏模式后，从 Steam 库打开它。
@@ -45,5 +47,7 @@ pwsh -File packaging/Build.ps1 -MakeNsis "C:\path\to\makensis.exe"
 ~~~
 
 发行包输出到 **dist**。Windows 可用 **dotnet DeckRemote.dll --check-driver** 验证 XInput 状态与 ViGEmBus 的震动回调。SteamOS 可用 **./DeckRemote --check-input** 检查采集，或运行 **./DeckRemote --check-rumble** 试播左右两次短震动。
+
+GitHub Actions 会在向 `main` 推送或提交目标为 `main` 的拉取请求时构建并运行自动检查。推送与 `Directory.Build.props` 版本一致的 `vX.Y.Z` 标签后，流水线会打包并发布 Release。
 
 HID 报告格式参考 SDL 的 [Steam Deck 输入驱动](https://github.com/libsdl-org/SDL/blob/release-3.4.20/src/joystick/hidapi/SDL_hidapi_steamdeck.c) 和 [Valve 报告结构](https://github.com/libsdl-org/SDL/blob/release-3.4.20/src/joystick/hidapi/steam/controller_structs.h)。

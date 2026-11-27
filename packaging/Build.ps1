@@ -4,6 +4,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $repo = [IO.Path]::GetFullPath([IO.Path]::Combine($PSScriptRoot, ".."))
+$version = ([xml](Get-Content -LiteralPath ([IO.Path]::Combine($repo, "Directory.Build.props")) -Raw)).Project.PropertyGroup.Version
 $dist = [IO.Path]::Combine($repo, "dist")
 $project = [IO.Path]::Combine($repo, "src", "DeckRemote", "DeckRemote.csproj")
 $win = [IO.Path]::Combine($dist, "win-x64")
@@ -21,8 +22,8 @@ if ($LASTEXITCODE -ne 0) { throw "SteamOS publish failed." }
     [IO.Path]::Combine($steam, "deck-remote.png"), $true)
 [IO.File]::Copy([IO.Path]::Combine($repo, "README.md"), [IO.Path]::Combine($steam, "README.md"), $true)
 
-tar.exe -czf ([IO.Path]::Combine($dist, "DeckRemote-0.4.1-steamos-x64.tar.gz")) -C $steam .
+tar.exe -czf ([IO.Path]::Combine($dist, "DeckRemote-$version-steamos-x64.tar.gz")) -C $steam .
 if ($LASTEXITCODE -ne 0) { throw "SteamOS packaging failed." }
 
-& $MakeNsis /V2 /INPUTCHARSET UTF8 ([IO.Path]::Combine($PSScriptRoot, "DeckRemote.nsi"))
+& $MakeNsis /V2 /INPUTCHARSET UTF8 "/DDECK_REMOTE_VERSION=$version" ([IO.Path]::Combine($PSScriptRoot, "DeckRemote.nsi"))
 if ($LASTEXITCODE -ne 0) { throw "Windows installer compilation failed." }
