@@ -1,0 +1,279 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DeckRemote"
+             x:Class="DeckRemote.DeckDashboard"
+             Background="#0D151C" Foreground="#F3F7F9">
+  <UserControl.Styles>
+    <Style Selector="Border.deck-card">
+      <Setter Property="Background" Value="#131E26" />
+      <Setter Property="BorderBrush" Value="#526774" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="17" />
+      <Setter Property="ClipToBounds" Value="True" />
+    </Style>
+    <Style Selector="Border.deck-heading">
+      <Setter Property="Background" Value="#1A2730" />
+      <Setter Property="BorderBrush" Value="#2D414D" />
+      <Setter Property="BorderThickness" Value="0,0,0,1" />
+      <Setter Property="Padding" Value="24,15" />
+    </Style>
+    <Style Selector="TextBlock.deck-title">
+      <Setter Property="FontSize" Value="31" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBlock.deck-muted">
+      <Setter Property="Foreground" Value="#B4C7D2" />
+    </Style>
+    <Style Selector="TextBlock.input-status">
+      <Setter Property="Foreground" Value="#B4C7D2" />
+    </Style>
+    <Style Selector="TextBlock.input-status.active">
+      <Setter Property="Foreground" Value="#26EDB6" />
+    </Style>
+    <Style Selector="TextBlock.input-status.paused">
+      <Setter Property="Foreground" Value="#FFBE58" />
+    </Style>
+    <Style Selector="Button.deck-action">
+      <Setter Property="Background" Value="#19262F" />
+      <Setter Property="BorderBrush" Value="#526774" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="MinHeight" Value="49" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.deck-action:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#243743" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.deck-action:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#304955" />
+    </Style>
+    <Style Selector="Button.deck-primary">
+      <Setter Property="Background" Value="#26EDB6" />
+      <Setter Property="Foreground" Value="#09241B" />
+      <Setter Property="BorderBrush" Value="#26EDB6" />
+    </Style>
+    <Style Selector="Button.deck-primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#79F6D1" />
+      <Setter Property="Foreground" Value="#09241B" />
+    </Style>
+    <Style Selector="Border.deck-key">
+      <Setter Property="Background" Value="#1B2933" />
+      <Setter Property="BorderBrush" Value="#607683" />
+      <Setter Property="BorderThickness" Value="2" />
+      <Setter Property="CornerRadius" Value="13" />
+    </Style>
+    <Style Selector="Border.deck-key > TextBlock">
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="FontSize" Value="29" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Border.deck-key > PathIcon">
+      <Setter Property="Foreground" Value="#C9D8E1" />
+      <Setter Property="Width" Value="28" />
+      <Setter Property="Height" Value="28" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.deck-key.pressed">
+      <Setter Property="Background" Value="#26EDB6" />
+      <Setter Property="BorderBrush" Value="#26EDB6" />
+    </Style>
+    <Style Selector="Border.deck-key.pressed > TextBlock">
+      <Setter Property="Foreground" Value="#09241B" />
+    </Style>
+    <Style Selector="Border.deck-key.pressed > PathIcon">
+      <Setter Property="Foreground" Value="#09241B" />
+    </Style>
+    <Style Selector="ProgressBar.deck-meter">
+      <Setter Property="Height" Value="17" />
+      <Setter Property="Maximum" Value="255" />
+      <Setter Property="Foreground" Value="#26EDB6" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="#1C2B35" BorderBrush="#607683" BorderThickness="1" CornerRadius="9" ClipToBounds="True">
+            <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}"
+                    CornerRadius="8" HorizontalAlignment="Left" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="ProgressBar.deck-meter.rumble">
+      <Setter Property="Foreground" Value="#FFBE58" />
+    </Style>
+    <Style Selector="Grid.meter-row > TextBlock">
+      <Setter Property="FontSize" Value="23" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.meter-value">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="FontFamily" Value="monospace" />
+      <Setter Property="FontWeight" Value="Medium" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid RowDefinitions="Auto,*">
+    <Border BorderBrush="#2D414D" BorderThickness="0,0,0,1" Padding="25,12">
+      <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="15" MinHeight="54">
+        <StackPanel Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+          <PathIcon Width="56" Height="30"
+                    Data="M8 0 H52 Q60 0 60 8 V20 Q60 28 52 28 H8 Q0 28 0 20 V8 Q0 0 8 0 Z M8 2 H52 Q58 2 58 8 V20 Q58 26 52 26 H8 Q2 26 2 20 V8 Q2 2 8 2 Z M15 3 H45 V25 H15 Z M17 5 H43 V23 H17 Z M7 10 H9 V13 H12 V15 H9 V18 H7 V15 H4 V13 H7 Z M50 9 H52 V12 H50 Z M50 16 H52 V19 H50 Z M46 13 H49 V15 H46 Z M53 13 H56 V15 H53 Z" />
+          <TextBlock Text="Deck Remote" FontSize="33" FontWeight="Bold" VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10"
+                    HorizontalAlignment="Right" VerticalAlignment="Center">
+          <Ellipse x:Name="ConnectionDot" Width="12" Height="12" Fill="#788E9C" VerticalAlignment="Center" />
+          <TextBlock x:Name="ConnectionLabel" Text="正在启动" FontSize="19" FontWeight="SemiBold"
+                     VerticalAlignment="Center" />
+          <Border x:Name="PeerDivider" Width="1" Height="20" Background="#415560" IsVisible="False" />
+          <TextBlock x:Name="ConnectedPeer" FontSize="19" FontWeight="SemiBold" MaxWidth="170"
+                     TextTrimming="CharacterEllipsis" IsVisible="False" VerticalAlignment="Center" />
+        </StackPanel>
+        <Button x:Name="PauseButton" Grid.Column="2" Classes="deck-action" Width="55" Height="53" Padding="0"
+                IsVisible="False" AutomationProperties.Name="暂停转发" ToolTip.Tip="暂停转发" Click="OnPause">
+          <Panel Width="24" Height="24">
+            <PathIcon x:Name="PauseIcon" Data="M4 2 H9 V22 H4 Z M15 2 H20 V22 H15 Z" />
+            <PathIcon x:Name="ResumeIcon" IsVisible="False" Data="M5 2 L21 12 L5 22 Z" />
+          </Panel>
+        </Button>
+        <Button x:Name="DisconnectButton" Grid.Column="3" Classes="deck-action" Width="55" Height="53" Padding="0"
+                IsVisible="False" AutomationProperties.Name="断开连接" ToolTip.Tip="断开连接" Click="OnDisconnect">
+          <PathIcon Width="25" Height="25"
+                    Data="M16 2 C18 0 21 0 23 2 C25 4 25 7 23 9 L19 13 L17 11 L21 7 C22 6 22 5 21 4 C20 3 19 3 18 4 L14 8 L12 6 Z M10 17 L6 21 C5 22 4 22 3 21 C2 20 2 19 3 18 L7 14 L5 12 L1 16 C-1 18 -1 21 1 23 C3 25 6 25 8 23 L12 19 Z M4 3 L7 6 L5.5 7.5 L2.5 4.5 Z M17 17 L21 21 L19.5 22.5 L15.5 18.5 Z" />
+        </Button>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="2.2*,*" ColumnSpacing="20" Margin="25,28,25,32">
+      <Border Classes="deck-card">
+        <Grid RowDefinitions="Auto,*">
+          <Border Classes="deck-heading">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+              <TextBlock Classes="deck-title" Text="手柄输入" />
+              <TextBlock x:Name="ForwardingLabel" Grid.Column="1" Classes="input-status" Text="本地输入"
+                         FontSize="21" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                         VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </Grid>
+          </Border>
+          <Viewbox Grid.Row="1" Stretch="Uniform" Margin="21,18,21,22">
+            <Grid Width="746" Height="504" RowDefinitions="Auto,*" RowSpacing="22">
+              <Grid ColumnDefinitions="*,*">
+                <local:DeckStickReadout x:Name="LeftStick" />
+                <local:DeckStickReadout x:Name="RightStick" Grid.Column="1" />
+              </Grid>
+              <Grid Grid.Row="1" ColumnDefinitions="*,*,*" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="68,68,68" RowDefinitions="68,68,68" HorizontalAlignment="Center">
+                  <Border x:Name="DpadUp" Grid.Column="1" Classes="deck-key" AutomationProperties.Name="方向键上">
+                    <PathIcon Data="M1 22 L15 2 L29 22 Z" />
+                  </Border>
+                  <Border x:Name="DpadLeft" Grid.Row="1" Classes="deck-key" AutomationProperties.Name="方向键左">
+                    <PathIcon Data="M22 1 L2 15 L22 29 Z" />
+                  </Border>
+                  <Border x:Name="DpadRight" Grid.Row="1" Grid.Column="2" Classes="deck-key" AutomationProperties.Name="方向键右">
+                    <PathIcon Data="M2 1 L22 15 L2 29 Z" />
+                  </Border>
+                  <Border x:Name="DpadDown" Grid.Row="2" Grid.Column="1" Classes="deck-key" AutomationProperties.Name="方向键下">
+                    <PathIcon Data="M1 2 L15 22 L29 2 Z" />
+                  </Border>
+                </Grid>
+                <Grid Grid.Column="1" ColumnDefinitions="79,79" RowDefinitions="43,59"
+                      RowSpacing="23" ColumnSpacing="21" HorizontalAlignment="Center" VerticalAlignment="Center">
+                  <Border x:Name="LeftShoulder" Classes="deck-key" CornerRadius="21"><TextBlock Text="LB" FontSize="23" /></Border>
+                  <Border x:Name="RightShoulder" Grid.Column="1" Classes="deck-key" CornerRadius="21"><TextBlock Text="RB" FontSize="23" /></Border>
+                  <Border x:Name="ViewKey" Grid.Row="1" Classes="deck-key" AutomationProperties.Name="查看键">
+                    <PathIcon Data="M1 2 H20 V15 H16 V5 H4 V12 H10 V15 H1 Z M11 9 H29 V24 H11 Z M14 12 V21 H26 V12 Z" />
+                  </Border>
+                  <Border x:Name="MenuKey" Grid.Row="1" Grid.Column="1" Classes="deck-key" AutomationProperties.Name="菜单键">
+                    <PathIcon Data="M0 0 H24 V2.5 H0 Z M0 8 H24 V10.5 H0 Z M0 16 H24 V18.5 H0 Z" />
+                  </Border>
+                </Grid>
+                <Grid Grid.Column="2" ColumnDefinitions="68,68,68" RowDefinitions="68,68,68" HorizontalAlignment="Center">
+                  <Border x:Name="FaceY" Grid.Column="1" Classes="deck-key" CornerRadius="34"><TextBlock Text="Y" /></Border>
+                  <Border x:Name="FaceX" Grid.Row="1" Classes="deck-key" CornerRadius="34"><TextBlock Text="X" /></Border>
+                  <Border x:Name="FaceB" Grid.Row="1" Grid.Column="2" Classes="deck-key" CornerRadius="34"><TextBlock Text="B" /></Border>
+                  <Border x:Name="FaceA" Grid.Row="2" Grid.Column="1" Classes="deck-key" CornerRadius="34"><TextBlock Text="A" /></Border>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Viewbox>
+        </Grid>
+      </Border>
+
+      <Grid x:Name="Telemetry" Grid.Column="1" RowDefinitions="*,*" RowSpacing="20" IsVisible="False">
+        <Border Classes="deck-card">
+          <Grid RowDefinitions="Auto,*">
+            <Border Classes="deck-heading"><TextBlock Classes="deck-title" Text="扳机" /></Border>
+            <Grid Grid.Row="1" RowDefinitions="*,*" Margin="24,12,24,15">
+              <StackPanel Spacing="8" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,*" Classes="meter-row">
+                  <TextBlock Text="LT" />
+                  <TextBlock x:Name="LeftTriggerValue" Grid.Column="1" Classes="meter-value" Text="0%" />
+                </Grid>
+                <ProgressBar x:Name="LeftTrigger" Classes="deck-meter" MinWidth="0" AutomationProperties.Name="左扳机 LT" />
+              </StackPanel>
+              <StackPanel Grid.Row="1" Spacing="8" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,*" Classes="meter-row">
+                  <TextBlock Text="RT" />
+                  <TextBlock x:Name="RightTriggerValue" Grid.Column="1" Classes="meter-value" Text="0%" />
+                </Grid>
+                <ProgressBar x:Name="RightTrigger" Classes="deck-meter" MinWidth="0" AutomationProperties.Name="右扳机 RT" />
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+        <Border Grid.Row="1" Classes="deck-card">
+          <Grid RowDefinitions="Auto,*">
+            <Border Classes="deck-heading"><TextBlock Classes="deck-title" Text="震动回传" /></Border>
+            <Grid Grid.Row="1" RowDefinitions="*,*" Margin="24,12,24,15">
+              <StackPanel Spacing="8" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,*" Classes="meter-row">
+                  <TextBlock Text="左" />
+                  <TextBlock x:Name="LeftRumbleValue" Grid.Column="1" Classes="meter-value" Text="0%" />
+                </Grid>
+                <ProgressBar x:Name="LeftRumble" Classes="deck-meter rumble" MinWidth="0" AutomationProperties.Name="左马达震动" />
+              </StackPanel>
+              <StackPanel Grid.Row="1" Spacing="8" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,*" Classes="meter-row">
+                  <TextBlock Text="右" />
+                  <TextBlock x:Name="RightRumbleValue" Grid.Column="1" Classes="meter-value" Text="0%" />
+                </Grid>
+                <ProgressBar x:Name="RightRumble" Classes="deck-meter rumble" MinWidth="0" AutomationProperties.Name="右马达震动" />
+              </StackPanel>
+            </Grid>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <Border x:Name="Devices" Grid.Column="1" Classes="deck-card">
+        <Grid RowDefinitions="Auto,*">
+          <Border Classes="deck-heading"><TextBlock x:Name="DeviceHeading" Classes="deck-title" Text="连接 PC" /></Border>
+          <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="14" Margin="21,18">
+              <TextBlock x:Name="ConnectionHelp" Classes="deck-muted" TextWrapping="Wrap" FontSize="16" />
+              <StackPanel x:Name="Pairing" Spacing="12" IsVisible="False">
+                <TextBlock Text="请核对两端显示的验证码。" Classes="deck-muted" TextWrapping="Wrap" FontSize="16" />
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="7">
+                  <TextBlock Text="PC" FontSize="16" />
+                  <TextBlock x:Name="PcCode" Grid.Column="1" FontSize="17" FontFamily="monospace" Foreground="#26EDB6" />
+                  <TextBlock Grid.Row="1" Text="Deck" FontSize="16" />
+                  <TextBlock x:Name="DeckCode" Grid.Row="1" Grid.Column="1" FontSize="17" FontFamily="monospace" Foreground="#26EDB6" />
+                </Grid>
+                <Button x:Name="ApproveButton" Classes="deck-action deck-primary" Content="确认一致"
+                        HorizontalAlignment="Stretch" Click="OnApprove" />
+                <Button Classes="deck-action" Content="取消" HorizontalAlignment="Stretch" Click="OnReject" />
+              </StackPanel>
+              <StackPanel x:Name="DeviceRows" Spacing="9" />
+              <Button x:Name="ReconnectButton" Classes="deck-action" IsVisible="False"
+                      HorizontalAlignment="Stretch" Click="OnReconnect" />
+              <Button x:Name="ForgetButton" Classes="deck-action" Content="解除配对" IsVisible="False"
+                      HorizontalAlignment="Stretch" Click="OnForget" />
+            </StackPanel>
+          </ScrollViewer>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</UserControl>

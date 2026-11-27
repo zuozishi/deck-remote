@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DeckRemote.Core/DeckRemote.Core.csproj" />
+    <Project Path="src/DeckRemote/DeckRemote.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DeckRemote.Checks/DeckRemote.Checks.csproj" />
+  </Folder>
+</Solution>

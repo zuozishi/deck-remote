@@ -1,0 +1,137 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DeckRemote"
+             x:Class="DeckRemote.ControllerPreview">
+  <UserControl.Styles>
+    <Style Selector="Border.input-key">
+      <Setter Property="CornerRadius" Value="9" />
+      <Setter Property="BorderThickness" Value="1.4" />
+      <Setter Property="BorderBrush" Value="#5A7082" />
+      <Setter Property="Background" Value="#2A3A49" />
+    </Style>
+    <Style Selector="Border.input-key.pressed">
+      <Setter Property="BorderBrush" Value="#26EDB6" />
+      <Setter Property="Background" Value="#26EDB6" />
+    </Style>
+    <Style Selector="Border.input-key > TextBlock">
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="23" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.input-key.pressed > TextBlock">
+      <Setter Property="Foreground" Value="#09241B" />
+    </Style>
+    <Style Selector="Border.input-key > PathIcon">
+      <Setter Property="Width" Value="25" />
+      <Setter Property="Height" Value="25" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Border.input-key.pressed > PathIcon">
+      <Setter Property="Foreground" Value="#09241B" />
+    </Style>
+    <Style Selector="Border.dpad-key">
+      <Setter Property="RenderTransform"><RotateTransform Angle="45" /></Setter>
+    </Style>
+    <Style Selector="Border.dpad-key > TextBlock">
+      <Setter Property="RenderTransform"><RotateTransform Angle="-45" /></Setter>
+    </Style>
+    <Style Selector="ProgressBar.trigger">
+      <Setter Property="Height" Value="13" />
+      <Setter Property="Maximum" Value="255" />
+      <Setter Property="Foreground" Value="#26EDB6" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="#233241" BorderBrush="#52697B" BorderThickness="1"
+                  CornerRadius="7" ClipToBounds="True">
+            <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}"
+                    CornerRadius="6" HorizontalAlignment="Left" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    <Style Selector="TextBlock.trigger-label">
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="17" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TextBlock.trigger-value">
+      <Setter Property="FontFamily" Value="monospace" />
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="TextAlignment" Value="Right" />
+    </Style>
+  </UserControl.Styles>
+
+  <Grid RowDefinitions="Auto,Auto,*,*" RowSpacing="16">
+    <TextBlock Text="手柄输入" FontSize="33" FontWeight="SemiBold" />
+
+    <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="22" Margin="0,3,0,2">
+      <Grid ColumnDefinitions="Auto,*,40" ColumnSpacing="10">
+        <TextBlock Classes="trigger-label" Text="LT" />
+        <ProgressBar x:Name="LeftTrigger" Grid.Column="1" Classes="trigger" MinWidth="0"
+                     AutomationProperties.Name="左扳机 LT" />
+        <TextBlock x:Name="LeftTriggerValue" Grid.Column="2" Classes="trigger-value" Text="0%" />
+      </Grid>
+      <Grid Grid.Column="1" ColumnDefinitions="Auto,*,40" ColumnSpacing="10">
+        <TextBlock Classes="trigger-label" Text="RT" />
+        <ProgressBar x:Name="RightTrigger" Grid.Column="1" Classes="trigger" MinWidth="0"
+                     AutomationProperties.Name="右扳机 RT" />
+        <TextBlock x:Name="RightTriggerValue" Grid.Column="2" Classes="trigger-value" Text="0%" />
+      </Grid>
+    </Grid>
+
+    <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="14">
+      <local:StickPreview x:Name="LeftStickPosition" />
+      <local:StickPreview x:Name="RightStickPosition" Grid.Column="1" />
+    </Grid>
+
+    <Border Grid.Row="3" BorderBrush="#455A6B" BorderThickness="1" Background="#101923" CornerRadius="12" Padding="15,8">
+      <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
+        <Grid Width="590" Height="174" ColumnDefinitions="*,*,*">
+          <Grid ColumnDefinitions="44,44,44" RowDefinitions="44,44,44" HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Border x:Name="DpadUp" Grid.Column="1" Classes="input-key dpad-key" ToolTip.Tip="方向键上">
+              <TextBlock Text="↑" FontFamily="Segoe UI Symbol" />
+            </Border>
+            <Border x:Name="DpadLeft" Grid.Row="1" Classes="input-key dpad-key" ToolTip.Tip="方向键左">
+              <TextBlock Text="←" FontFamily="Segoe UI Symbol" />
+            </Border>
+            <Border x:Name="DpadRight" Grid.Row="1" Grid.Column="2" Classes="input-key dpad-key" ToolTip.Tip="方向键右">
+              <TextBlock Text="→" FontFamily="Segoe UI Symbol" />
+            </Border>
+            <Border x:Name="DpadDown" Grid.Row="2" Grid.Column="1" Classes="input-key dpad-key" ToolTip.Tip="方向键下">
+              <TextBlock Text="↓" FontFamily="Segoe UI Symbol" />
+            </Border>
+          </Grid>
+          <Grid Grid.Column="1" ColumnDefinitions="72,72" RowDefinitions="33,42,35" ColumnSpacing="13" RowSpacing="12"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border x:Name="Lb" Classes="input-key" CornerRadius="17"><TextBlock Text="LB" FontSize="19" /></Border>
+            <Border x:Name="Rb" Grid.Column="1" Classes="input-key" CornerRadius="17"><TextBlock Text="RB" FontSize="19" /></Border>
+            <Border x:Name="ViewKey" Grid.Row="1" Classes="input-key" ToolTip.Tip="查看键">
+              <PathIcon AutomationProperties.Name="查看键"
+                        Data="M1 2 H20 V15 H16 V5 H4 V12 H10 V15 H1 Z M11 9 H29 V24 H11 Z M14 12 V21 H26 V12 Z" />
+            </Border>
+            <Border x:Name="MenuKey" Grid.Row="1" Grid.Column="1" Classes="input-key" ToolTip.Tip="菜单键">
+              <PathIcon AutomationProperties.Name="菜单键" Data="M0 0 H24 V2.5 H0 Z M0 8 H24 V10.5 H0 Z M0 16 H24 V18.5 H0 Z" />
+            </Border>
+            <Border x:Name="GuideKey" Grid.Row="2" Grid.ColumnSpan="2" Width="35" CornerRadius="18"
+                    Classes="input-key" HorizontalAlignment="Center" ToolTip.Tip="Xbox Guide（R5）">
+              <PathIcon Width="17" Height="17" AutomationProperties.Name="Xbox Guide"
+                        Data="M2 2 L5 2 L9 6.5 L13 2 L16 2 L10.7 8.8 L16 16 L13 16 L9 11 L5 16 L2 16 L7.3 8.8 Z" />
+            </Border>
+          </Grid>
+          <Grid Grid.Column="2" ColumnDefinitions="48,48,48" RowDefinitions="48,48,48" HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Border x:Name="FaceY" Grid.Column="1" Classes="input-key" CornerRadius="24"><TextBlock Text="Y" /></Border>
+            <Border x:Name="FaceX" Grid.Row="1" Classes="input-key" CornerRadius="24"><TextBlock Text="X" /></Border>
+            <Border x:Name="FaceB" Grid.Row="1" Grid.Column="2" Classes="input-key" CornerRadius="24"><TextBlock Text="B" /></Border>
+            <Border x:Name="FaceA" Grid.Row="2" Grid.Column="1" Classes="input-key" CornerRadius="24"><TextBlock Text="A" /></Border>
+          </Grid>
+        </Grid>
+      </Viewbox>
+    </Border>
+  </Grid>
+</UserControl>
+

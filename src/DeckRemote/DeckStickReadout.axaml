@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DeckRemote"
+             x:Class="DeckRemote.DeckStickReadout">
+  <StackPanel Spacing="12" HorizontalAlignment="Center">
+    <Grid Width="226" Height="226">
+      <local:StickPlot x:Name="Plot" />
+      <TextBlock x:Name="ClickLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                 Margin="0,0,0,19" FontSize="20" FontWeight="SemiBold" Foreground="#A8BCC9" />
+    </Grid>
+    <Grid ColumnDefinitions="*,*" ColumnSpacing="14" Width="278">
+      <TextBlock x:Name="AxisX" Text="X 0" FontFamily="monospace" FontSize="23" TextAlignment="Center" />
+      <TextBlock x:Name="AxisY" Grid.Column="1" Text="Y 0" FontFamily="monospace" FontSize="23" TextAlignment="Center" />
+    </Grid>
+  </StackPanel>
+</UserControl>
